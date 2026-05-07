@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>fruti0.4</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        padding: 32px;
+        font-family: Arial, sans-serif;
+        background: #f4f6fb;
+        color: #202124;
+      }
+
+      section {
+        max-width: 520px;
+      }
+
+      h1 {
+        margin-top: 0;
+      }
+
+      label {
+        display: block;
+        margin-top: 14px;
+        margin-bottom: 6px;
+      }
+
+      input,
+      textarea {
+        display: block;
+        width: 100%;
+        max-width: 360px;
+        margin-bottom: 16px;
+        padding: 10px 12px;
+        border: 1px solid #b8c0cc;
+        border-radius: 10px;
+        font: inherit;
+        background: white;
+        color: #202124;
+      }
+
+      input + button,
+      textarea + button {
+        margin-top: 6px;
+      }
+
+      button {
+        min-height: 40px;
+        padding: 10px 14px;
+        border: 1px solid #2f5fdd;
+        border-radius: 999px;
+        background: #2f5fdd;
+        color: white;
+        font: inherit;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #244db5;
+      }
+
+      #showPassword,
+      #showLoginPassword,
+      #saveName,
+      #loginButton,
+      #saveDescription,
+      #saveNote,
+      #savePrivateNote,
+      #saveUsername {
+        display: block;
+        margin-top: 16px;
+      }
+
+      .password-error::placeholder {
+        color: red;
+      }
+
+      body.dark-theme {
+        background: black;
+        color: white;
+      }
+
+      body.dark-theme input,
+      body.dark-theme textarea,
+      body.dark-theme button {
+        background: #222;
+        color: white;
+        border: 1px solid white;
+      }
+
+      body.dark-theme button:hover {
+        background: #333;
+      }
+
+      body.tv-girl-theme {
+        background: black;
+        color: #4aa3ff;
+      }
+
+      body.tv-girl-theme input,
+      body.tv-girl-theme textarea {
+        background: black;
+        color: #4aa3ff;
+        border: 1px solid #4aa3ff;
+      }
+
+      body.tv-girl-theme button {
+        background: #ff5aa5;
+        color: #4aa3ff;
+        border: 1px solid #ff5aa5;
+      }
+
+      body.tv-girl-theme button:hover {
+        background: #ff7ab8;
+      }
+
+      #backToAccount {
+        position: fixed;
+        right: 16px;
+        bottom: 16px;
+        display: none;
+      }
+
+      #goToLogin {
+        position: fixed;
+        right: 16px;
+        bottom: 16px;
+        display: none;
+      }
+
+      #profileMenu {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        width: 170px;
+      }
+
+      #profileBox {
+        padding: 10px 14px;
+        border: 1px solid black;
+        border-radius: 12px;
+        background: white;
+      }
+
+      body.dark-theme #profileBox {
+        border-color: white;
+        background: black;
+      }
+
+      body.tv-girl-theme #profileBox {
+        border-color: #4aa3ff;
+        background: black;
+      }
+
+      #profileActions button {
+        width: 100%;
+        display: block;
+        margin-top: 8px;
+        padding-left: 10px;
+        padding-right: 10px;
+        white-space: normal;
+      }
+
+      #profileScreen textarea {
+        display: block;
+        margin-top: 8px;
+        height: 90px;
+      }
+
+      #notesList li {
+        margin-top: 8px;
+      }
+
+      #notesList button,
+      #privateNotesList button {
+        margin-left: 8px;
+      }
+
+      .postButton {
+        width: 100%;
+        max-width: 420px;
+        margin-top: 12px;
+        text-align: left;
+        border-radius: 12px;
+      }
+
+      .postButton strong,
+      .postButton span {
+        display: block;
+      }
+
+      .postButton span {
+        margin-top: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <section id="homeScreen">
+      <h1>eae</h1>
+      <p>to fazeno esse site pra aprender a programar em html, e tmb pq eu tava no tedio pq meu pc crebo
+      </p>
+      <button id="createAccount">criar minha conta</button>
+      <button id="homeLoginButton">entrar</button>
+    </section>
+
+    <section id="descriptionScreen" style="display: none;">
+      <h1>eae</h1>
+      <p>to fazeno esse site pra aprender a programar em html, e tmb pq eu tava no tedio pq meu pc crebo
+      </p>
+      <button id="backToProfile">voltar</button>
+    </section>
+
+    <section id="accountScreen" style="display: none;">
+      <h1>cria tua conta ai macho</h1>
+
+      <label for="username">digita teu nome de usuário ai</label>
+      <input type="text" id="username" placeholder="teu nome de usuario ai" />
+
+      <label for="password">digita tua senha (tem que ser secreta viu)</label>
+      <input type="password" id="password" placeholder="tua senha ultra secreta" />
+      <button type="button" id="showPassword">olhinho</button>
+
+      <button id="saveName">aperta aqui</button>
+      <p id="greeting"></p>
+    </section>
+
+    <section id="loginScreen" style="display: none;">
+      <h1>entra na tua conta ai</h1>
+
+      <label for="loginUsername">teu usuario</label>
+      <input type="text" id="loginUsername" placeholder="teu nome de usuario" />
+
+      <label for="loginPassword">tua senha</label>
+      <input type="password" id="loginPassword" placeholder="tua senha" />
+      <button type="button" id="showLoginPassword">olhinho</button>
+
+      <button id="loginButton">entrar</button>
+      <p id="loginMessage"></p>
+    </section>
+
+    <section id="profileScreen" style="display: none;">
+      <div id="profileMenu">
+        <div id="profileBox">
+          <strong>perfil</strong>
+          <p id="profileUsername"></p>
+        </div>
+
+        <div id="profileActions">
+          <button id="logoutButton">sair</button>
+          <button id="descriptionButton">descricao</button>
+          <button id="settingsButton">configuracoes</button>
+          <button id="postsButton">posts</button>
+        </div>
+      </div>
+
+      <h1>pagina principal</h1>
+      <p>tu conseguiu logar, agora essa é tua página.</p>
+
+      <h2>minha descricao</h2>
+      <textarea id="userDescription" placeholder="escreve uma descricao sobre tu"></textarea>
+      <button id="saveDescription">salvar descricao</button>
+      <p id="descriptionMessage"></p>
+
+      <h2>minhas anotacoes publicas</h2>
+      <textarea id="noteInput" placeholder="escreve uma anotacao publica"></textarea>
+      <button id="saveNote">salvar anotacao publica</button>
+      <ul id="notesList"></ul>
+
+      <h2>minhas anotacoes privadas</h2>
+      <textarea id="privateNoteInput" placeholder="escreve uma anotacao privada"></textarea>
+      <button id="savePrivateNote">salvar anotacao privada</button>
+      <ul id="privateNotesList"></ul>
+    </section>
+
+    <section id="postsScreen" style="display: none;">
+      <h1>posts</h1>
+      <ul id="postsList"></ul>
+      <button id="backFromPosts">voltar</button>
+    </section>
+
+    <section id="userPageScreen" style="display: none;">
+      <h1 id="visitedUsername"></h1>
+      <p id="visitedTheme"></p>
+
+      <h2>descricao</h2>
+      <p id="visitedDescription"></p>
+
+      <h2>anotacoes publicas</h2>
+      <ul id="visitedPublicNotes"></ul>
+      <button id="backFromUserPage">voltar</button>
+    </section>
+
+    <section id="settingsScreen" style="display: none;">
+      <h1>configuracoes</h1>
+
+      <h2>tema</h2>
+      <button id="lightThemeButton">tema Light</button>
+      <button id="darkThemeButton">tema Dark</button>
+      <button id="tvGirlThemeButton">Tv Girl</button>
+
+      <h2>nome de usuario</h2>
+      <input type="text" id="newUsername" placeholder="novo nome de usuario" />
+      <button id="saveUsername">salvar nome</button>
+      <p id="settingsMessage"></p>
+
+      <button id="backFromSettings">voltar</button>
+    </section>
+
+    <button id="backToAccount">criar conta</button>
+    <button id="goToLogin">entrar</button>
+
+    <script>
+      const API_BASE_URL = "";
+      const homeScreen = document.getElementById("homeScreen");
+      const descriptionScreen = document.getElementById("descriptionScreen");
+      const accountScreen = document.getElementById("accountScreen");
+      const loginScreen = document.getElementById("loginScreen");
+      const profileScreen = document.getElementById("profileScreen");
+      const settingsScreen = document.getElementById("settingsScreen");
+      const postsScreen = document.getElementById("postsScreen");
+      const userPageScreen = document.getElementById("userPageScreen");
+      const createAccountButton = document.getElementById("createAccount");
+      const homeLoginButton = document.getElementById("homeLoginButton");
+      const backToProfileButton = document.getElementById("backToProfile");
+      const usernameInput = document.getElementById("username");
+      const passwordInput = document.getElementById("password");
+      const showPasswordButton = document.getElementById("showPassword");
+      const saveNameButton = document.getElementById("saveName");
+      const greeting = document.getElementById("greeting");
+      const loginUsernameInput = document.getElementById("loginUsername");
+      const loginPasswordInput = document.getElementById("loginPassword");
+      const showLoginPasswordButton = document.getElementById("showLoginPassword");
+      const loginButton = document.getElementById("loginButton");
+      const loginMessage = document.getElementById("loginMessage");
+      const backToAccountButton = document.getElementById("backToAccount");
+      const goToLoginButton = document.getElementById("goToLogin");
+      const profileUsername = document.getElementById("profileUsername");
+      const logoutButton = document.getElementById("logoutButton");
+      const descriptionButton = document.getElementById("descriptionButton");
+      const settingsButton = document.getElementById("settingsButton");
+      const postsButton = document.getElementById("postsButton");
+      const userDescription = document.getElementById("userDescription");
+      const saveDescriptionButton = document.getElementById("saveDescription");
+      const descriptionMessage = document.getElementById("descriptionMessage");
+      const noteInput = document.getElementById("noteInput");
+      const saveNoteButton = document.getElementById("saveNote");
+      const notesList = document.getElementById("notesList");
+      const privateNoteInput = document.getElementById("privateNoteInput");
+      const savePrivateNoteButton = document.getElementById("savePrivateNote");
+      const privateNotesList = document.getElementById("privateNotesList");
+      const postsList = document.getElementById("postsList");
+      const backFromPostsButton = document.getElementById("backFromPosts");
+      const visitedUsername = document.getElementById("visitedUsername");
+      const visitedTheme = document.getElementById("visitedTheme");
+      const visitedDescription = document.getElementById("visitedDescription");
+      const visitedPublicNotes = document.getElementById("visitedPublicNotes");
+      const backFromUserPageButton = document.getElementById("backFromUserPage");
+      const lightThemeButton = document.getElementById("lightThemeButton");
+      const darkThemeButton = document.getElementById("darkThemeButton");
+      const tvGirlThemeButton = document.getElementById("tvGirlThemeButton");
+      const newUsernameInput = document.getElementById("newUsername");
+      const saveUsernameButton = document.getElementById("saveUsername");
+      const settingsMessage = document.getElementById("settingsMessage");
+      const backFromSettingsButton = document.getElementById("backFromSettings");
+      let currentUsername = "";
+
+      function showGreeting(name) {
+        greeting.textContent = name;
+      }
+
+      function showScreen(screen) {
+        homeScreen.style.display = "none";
+        descriptionScreen.style.display = "none";
+        accountScreen.style.display = "none";
+        loginScreen.style.display = "none";
+        profileScreen.style.display = "none";
+        settingsScreen.style.display = "none";
+        postsScreen.style.display = "none";
+        userPageScreen.style.display = "none";
+        backToAccountButton.style.display = "none";
+        goToLoginButton.style.display = "none";
+
+        screen.style.display = "block";
+
+        if (screen === loginScreen) {
+          backToAccountButton.style.display = "block";
+        }
+
+        if (screen === accountScreen) {
+          goToLoginButton.style.display = "block";
+        }
+      }
+
+      function clearAccountForm() {
+        usernameInput.value = "";
+        passwordInput.value = "";
+        passwordInput.classList.remove("password-error");
+        passwordInput.placeholder = "tua senha ultra secreta";
+        showGreeting("");
+      }
+
+      function showLoginMessage(message, color) {
+        loginMessage.textContent = "";
+        loginMessage.style.color = color;
+        loginMessage.textContent = message;
+      }
+
+      function getCurrentTheme() {
+        if (document.body.classList.contains("tv-girl-theme")) {
+          return "tv-girl";
+        }
+
+        if (document.body.classList.contains("dark-theme")) {
+          return "dark";
+        }
+
+        return "light";
+      }
+
+      function changeTheme(theme) {
+        localStorage.setItem("theme", theme);
+        document.body.classList.remove("dark-theme", "tv-girl-theme");
+
+        if (theme === "dark") {
+          document.body.classList.add("dark-theme");
+        }
+
+        if (theme === "tv-girl") {
+          document.body.classList.add("tv-girl-theme");
+        }
+
+        if (currentUsername) {
+          updateCurrentAccount(function (account) {
+            account.theme = theme;
+          });
+        }
+      }
+
+      function getCurrentAccount() {
+        const accounts = getAccounts();
+
+        return accounts.find(function (account) {
+          return account.username === currentUsername;
+        });
+      }
+
+      function updateCurrentAccount(changeAccount) {
+        const accounts = getAccounts();
+        const account = accounts.find(function (account) {
+          return account.username === currentUsername;
+        });
+
+        if (account) {
+          changeAccount(account);
+          saveAccounts(accounts);
+        }
+      }
+
+      function renderNotes() {
+        const account = getCurrentAccount();
+        notesList.innerHTML = "";
+        privateNotesList.innerHTML = "";
+
+        if (!account || !account.publicNotes || account.publicNotes.length === 0) {
+          const emptyNote = document.createElement("li");
+          emptyNote.textContent = "nenhuma anotacao publica ainda";
+          notesList.appendChild(emptyNote);
+        } else {
+          account.publicNotes.forEach(function (note, index) {
+            const noteItem = document.createElement("li");
+            const noteContent = document.createElement("span");
+            const deleteButton = document.createElement("button");
+
+            noteContent.textContent = note;
+            deleteButton.textContent = "apagar";
+            deleteButton.addEventListener("click", function () {
+              updateCurrentAccount(function (account) {
+                account.publicNotes.splice(index, 1);
+              });
+              renderNotes();
+            });
+
+            noteItem.appendChild(noteContent);
+            noteItem.appendChild(deleteButton);
+            notesList.appendChild(noteItem);
+          });
+        }
+
+        if (!account || !account.privateNotes || account.privateNotes.length === 0) {
+          const emptyPrivateNote = document.createElement("li");
+          emptyPrivateNote.textContent = "nenhuma anotacao privada ainda";
+          privateNotesList.appendChild(emptyPrivateNote);
+        } else {
+          account.privateNotes.forEach(function (note, index) {
+            const noteItem = document.createElement("li");
+            const noteContent = document.createElement("span");
+            const deleteButton = document.createElement("button");
+
+            noteContent.textContent = note;
+            deleteButton.textContent = "apagar";
+            deleteButton.addEventListener("click", function () {
+              updateCurrentAccount(function (account) {
+                account.privateNotes.splice(index, 1);
+              });
+              renderNotes();
+            });
+
+            noteItem.appendChild(noteContent);
+            noteItem.appendChild(deleteButton);
+            privateNotesList.appendChild(noteItem);
+          });
+        }
+      }
+
+      function renderPosts() {
+        const accounts = getAccounts();
+        postsList.innerHTML = "";
+        let hasPosts = false;
+
+        accounts.forEach(function (account) {
+          account.publicNotes.forEach(function (note) {
+            const postItem = document.createElement("li");
+            const postButton = document.createElement("button");
+            const postUsername = document.createElement("strong");
+            const postText = document.createElement("span");
+
+            hasPosts = true;
+            postButton.className = "postButton";
+            postUsername.textContent = account.username;
+            postText.textContent = note;
+            postButton.addEventListener("click", function () {
+              openUserPage(account.username);
+            });
+
+            postButton.appendChild(postUsername);
+            postButton.appendChild(postText);
+            postItem.appendChild(postButton);
+            postsList.appendChild(postItem);
+          });
+        });
+
+        if (!hasPosts) {
+          const emptyPost = document.createElement("li");
+          emptyPost.textContent = "nenhum post publico ainda";
+          postsList.appendChild(emptyPost);
+        }
+      }
+
+      function getThemeName(theme) {
+        if (theme === "dark") {
+          return "Dark";
+        }
+
+        if (theme === "tv-girl") {
+          return "TV Girl";
+        }
+
+        return "Light";
+      }
+
+      function openPostsPage() {
+        renderPosts();
+        showScreen(postsScreen);
+      }
+
+      function openUserPage(username) {
+        const accounts = getAccounts();
+        const account = accounts.find(function (account) {
+          return account.username === username;
+        });
+
+        if (!account) {
+          return;
+        }
+
+        visitedUsername.textContent = account.username;
+        visitedTheme.textContent = "tema atual: " + getThemeName(account.theme);
+        visitedDescription.textContent = account.description || "sem descricao ainda";
+        visitedPublicNotes.innerHTML = "";
+
+        if (account.publicNotes.length === 0) {
+          const emptyNote = document.createElement("li");
+          emptyNote.textContent = "nenhuma anotacao publica ainda";
+          visitedPublicNotes.appendChild(emptyNote);
+        } else {
+          account.publicNotes.forEach(function (note) {
+            const noteItem = document.createElement("li");
+            noteItem.textContent = note;
+            visitedPublicNotes.appendChild(noteItem);
+          });
+        }
+
+        showScreen(userPageScreen);
+      }
+
+      function openProfilePage(username) {
+        currentUsername = username;
+        localStorage.setItem("loggedUsername", username);
+        const account = getCurrentAccount();
+
+        if (account && account.theme) {
+          changeTheme(account.theme);
+        }
+
+        profileUsername.textContent = username;
+        userDescription.value = "";
+        descriptionMessage.textContent = "";
+        noteInput.value = "";
+        privateNoteInput.value = "";
+
+        if (account && account.description) {
+          userDescription.value = account.description;
+        }
+
+        renderNotes();
+        showScreen(profileScreen);
+      }
+
+      function openSettingsPage() {
+        newUsernameInput.value = currentUsername;
+        settingsMessage.textContent = "";
+        showScreen(settingsScreen);
+      }
+
+      function getAccounts() {
+        const request = new XMLHttpRequest();
+
+        try {
+          request.open("GET", API_BASE_URL + "/api/accounts", false);
+          request.send();
+
+          if (request.status >= 200 && request.status < 300) {
+            return JSON.parse(request.responseText).map(function (account) {
+              if (!account.publicNotes) {
+                account.publicNotes = account.notes || [];
+              }
+
+              if (!account.privateNotes) {
+                account.privateNotes = [];
+              }
+
+              if (!account.theme) {
+                account.theme = "light";
+              }
+
+              delete account.notes;
+
+              return account;
+            });
+          }
+        } catch (error) {
+          console.log("nao consegui falar com o databank ainda");
+        }
+
+        const savedAccounts = localStorage.getItem("accounts");
+
+        if (savedAccounts) {
+          return JSON.parse(savedAccounts).map(function (account) {
+            if (!account.publicNotes) {
+              account.publicNotes = account.notes || [];
+            }
+
+            if (!account.privateNotes) {
+              account.privateNotes = [];
+            }
+
+            if (!account.theme) {
+              account.theme = "light";
+            }
+
+            delete account.notes;
+
+            return account;
+          });
+        }
+
+        return [];
+      }
+
+      function saveAccounts(accounts) {
+        const request = new XMLHttpRequest();
+
+        try {
+          request.open("POST", API_BASE_URL + "/api/accounts", false);
+          request.setRequestHeader("Content-Type", "application/json");
+          request.send(JSON.stringify({ accounts: accounts }));
+        } catch (error) {
+          console.log("nao consegui salvar no databank ainda");
+        }
+
+        localStorage.setItem("accounts", JSON.stringify(accounts));
+      }
+
+      function togglePassword(input, button) {
+        if (input.type === "password") {
+          input.type = "text";
+          button.textContent = "esconder";
+        } else {
+          input.type = "password";
+          button.textContent = "olhinho";
+        }
+      }
+
+      const oldUsername = localStorage.getItem("username");
+      const oldPassword = localStorage.getItem("password");
+      const accounts = getAccounts();
+
+      if (oldUsername && oldPassword && accounts.length === 0) {
+        accounts.push({
+          username: oldUsername,
+          password: oldPassword,
+          description: "",
+          publicNotes: [],
+          privateNotes: [],
+          theme: "light"
+        });
+        saveAccounts(accounts);
+      }
+
+      saveAccounts(accounts);
+
+      changeTheme(localStorage.getItem("theme") || "light");
+
+      const loggedUsername = localStorage.getItem("loggedUsername");
+
+      if (loggedUsername) {
+        const loggedAccount = accounts.find(function (account) {
+          return account.username === loggedUsername;
+        });
+
+        if (loggedAccount) {
+          openProfilePage(loggedAccount.username);
+        } else {
+          localStorage.removeItem("loggedUsername");
+        }
+      }
+
+      createAccountButton.addEventListener("click", function () {
+        showScreen(accountScreen);
+      });
+
+      homeLoginButton.addEventListener("click", function () {
+        loginUsernameInput.value = "";
+        loginPasswordInput.value = "";
+        loginMessage.textContent = "";
+        showScreen(loginScreen);
+      });
+
+      backToProfileButton.addEventListener("click", function () {
+        showScreen(profileScreen);
+      });
+
+      showPasswordButton.addEventListener("click", function () {
+        togglePassword(passwordInput, showPasswordButton);
+      });
+
+      showLoginPasswordButton.addEventListener("click", function () {
+        togglePassword(loginPasswordInput, showLoginPasswordButton);
+      });
+
+      saveNameButton.addEventListener("click", function () {
+        const name = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
+        const accounts = getAccounts();
+        const accountExists = accounts.some(function (account) {
+          return account.username === name;
+        });
+
+        if (accountExists) {
+          showGreeting("esse nome de usuario ja existe");
+          return;
+        }
+
+        if (password === "an\u00e3o" || password.length < 8) {
+          passwordInput.value = "";
+          passwordInput.placeholder = "senha muito curta!";
+          passwordInput.classList.add("password-error");
+          return;
+        }
+
+        passwordInput.classList.remove("password-error");
+        passwordInput.placeholder = "tua senha ultra secreta";
+        accounts.push({
+          username: name,
+          password: password,
+          description: "",
+          publicNotes: [],
+          privateNotes: [],
+          theme: localStorage.getItem("theme") || "light"
+        });
+        saveAccounts(accounts);
+        showGreeting("");
+        loginUsernameInput.value = "";
+        loginPasswordInput.value = "";
+        loginMessage.textContent = "";
+        showScreen(loginScreen);
+      });
+
+      loginButton.addEventListener("click", function () {
+        const accounts = getAccounts();
+        const loginUsername = loginUsernameInput.value.trim();
+        const loginPassword = loginPasswordInput.value.trim();
+        const account = accounts.find(function (account) {
+          return account.username === loginUsername;
+        });
+
+        if (account && loginPassword === account.password) {
+          showLoginMessage("", "green");
+          openProfilePage(account.username);
+        } else {
+          showLoginMessage("revisa teus bagui direitin ai", "red");
+        }
+      });
+
+      loginUsernameInput.addEventListener("input", function () {
+        loginMessage.textContent = "";
+      });
+
+      loginPasswordInput.addEventListener("input", function () {
+        loginMessage.textContent = "";
+      });
+
+      backToAccountButton.addEventListener("click", function () {
+        clearAccountForm();
+        showScreen(accountScreen);
+      });
+
+      goToLoginButton.addEventListener("click", function () {
+        loginUsernameInput.value = "";
+        loginPasswordInput.value = "";
+        loginMessage.textContent = "";
+        showScreen(loginScreen);
+      });
+
+      logoutButton.addEventListener("click", function () {
+        loginUsernameInput.value = "";
+        loginPasswordInput.value = "";
+        updateCurrentAccount(function (account) {
+          account.theme = getCurrentTheme();
+        });
+        currentUsername = "";
+        profileUsername.textContent = "";
+        localStorage.removeItem("loggedUsername");
+        clearAccountForm();
+        showScreen(accountScreen);
+      });
+
+      descriptionButton.addEventListener("click", function () {
+        showScreen(descriptionScreen);
+      });
+
+      settingsButton.addEventListener("click", function () {
+        openSettingsPage();
+      });
+
+      postsButton.addEventListener("click", function () {
+        openPostsPage();
+      });
+
+      backFromSettingsButton.addEventListener("click", function () {
+        openProfilePage(currentUsername);
+      });
+
+      backFromPostsButton.addEventListener("click", function () {
+        openProfilePage(currentUsername);
+      });
+
+      backFromUserPageButton.addEventListener("click", function () {
+        openPostsPage();
+      });
+
+      lightThemeButton.addEventListener("click", function () {
+        changeTheme("light");
+      });
+
+      darkThemeButton.addEventListener("click", function () {
+        changeTheme("dark");
+      });
+
+      tvGirlThemeButton.addEventListener("click", function () {
+        changeTheme("tv-girl");
+      });
+
+      saveUsernameButton.addEventListener("click", function () {
+        const newUsername = newUsernameInput.value.trim();
+        const accounts = getAccounts();
+        const account = accounts.find(function (account) {
+          return account.username === currentUsername;
+        });
+        const usernameExists = accounts.some(function (account) {
+          return account.username === newUsername;
+        });
+
+        if (newUsername === "") {
+          settingsMessage.textContent = "digita um nome primeiro";
+          return;
+        }
+
+        if (newUsername !== currentUsername && usernameExists) {
+          settingsMessage.textContent = "esse nome ja existe";
+          return;
+        }
+
+        if (account) {
+          account.username = newUsername;
+          saveAccounts(accounts);
+          currentUsername = newUsername;
+          localStorage.setItem("loggedUsername", newUsername);
+          profileUsername.textContent = newUsername;
+          settingsMessage.textContent = "nome salvo";
+        }
+      });
+
+      saveDescriptionButton.addEventListener("click", function () {
+        updateCurrentAccount(function (account) {
+          account.description = userDescription.value.trim();
+        });
+        descriptionMessage.textContent = "descricao salva";
+      });
+
+      saveNoteButton.addEventListener("click", function () {
+        const note = noteInput.value.trim();
+
+        if (note === "") {
+          return;
+        }
+
+        updateCurrentAccount(function (account) {
+          if (!account.publicNotes) {
+            account.publicNotes = [];
+          }
+
+          account.publicNotes.push(note);
+        });
+        noteInput.value = "";
+        renderNotes();
+      });
+
+      savePrivateNoteButton.addEventListener("click", function () {
+        const note = privateNoteInput.value.trim();
+
+        if (note === "") {
+          return;
+        }
+
+        updateCurrentAccount(function (account) {
+          if (!account.privateNotes) {
+            account.privateNotes = [];
+          }
+
+          account.privateNotes.push(note);
+        });
+        privateNoteInput.value = "";
+        renderNotes();
+      });
+    </script>
+  </body>
+</html>
