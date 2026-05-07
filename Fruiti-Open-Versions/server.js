@@ -5,7 +5,7 @@ const path = require("path");
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || (process.env.PORT ? "0.0.0.0" : "127.0.0.1");
 const DATA_FILE = path.join(__dirname, "databank.json");
-const PUBLIC_FILE = path.join(__dirname, "..", "fruiti0.4.html");
+const PUBLIC_FILE = path.join(__dirname, "fruiti0.4.html");
 
 function readData() {
   if (!fs.existsSync(DATA_FILE)) {
